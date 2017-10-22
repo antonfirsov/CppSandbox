@@ -93,3 +93,48 @@ TEST_CASE("hello aligned")
         REQUIRE(c == glm::aligned_dvec4(6.0, 8, 10, 12));
     }
 }
+
+namespace VectorTests
+{
+    template<typename TVector>
+    struct Vector4TestFixture
+    {
+        typedef typename TVector::value_type TScalar;
+
+        void TestAddition() const
+        {
+            TVector a(static_cast<TScalar>(1), static_cast<TScalar>(2), static_cast<TScalar>(3), static_cast<TScalar>(4));
+            TVector b(static_cast<TScalar>(1), static_cast<TScalar>(2), static_cast<TScalar>(3), static_cast<TScalar>(4));
+
+            TVector c = a + b;
+
+            REQUIRE(c.x == a.x + b.x);
+            REQUIRE(c.y == a.y + b.y);
+            REQUIRE(c.z == a.z + b.z);
+            REQUIRE(c.w == a.w + b.w);
+        }
+    };
+
+    namespace add
+    {
+        TEST_CASE_METHOD(Vector4TestFixture<glm::vec4>, "vec4")
+        {
+            TestAddition();
+        }
+
+        TEST_CASE_METHOD(Vector4TestFixture<glm::dvec4>, "dvec4")
+        {
+            TestAddition();
+        }
+
+        TEST_CASE_METHOD(Vector4TestFixture<glm::aligned_vec4>, "aligned_vec4")
+        {
+            TestAddition();
+        }
+
+        TEST_CASE_METHOD(Vector4TestFixture<glm::aligned_dvec4>, "aligned_dvec4")
+        {
+            TestAddition();
+        }   
+    }
+}
