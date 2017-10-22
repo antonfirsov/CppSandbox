@@ -1,6 +1,6 @@
 project (hello)
 
-add_executable(hello Main.cpp Hello.cpp GlmTest.cpp)
+add_executable(hello Main.cpp Hello.cpp GlmTest.cpp GeomTest.cpp)
 
 include_directories(external)
 

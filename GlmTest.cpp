@@ -1,32 +1,10 @@
 #include <iostream>
 
-#include <glm/vec3.hpp> // glm::vec3
-#include <glm/vec4.hpp> // glm::vec4
-#include <glm/mat4x4.hpp> // glm::mat4
-#include <glm/gtc/matrix_transform.hpp> // glm::translate, glm::rotate, glm::scale, glm::perspective
-#include <glm/gtc/constants.hpp> // glm::pi
-
-glm::mat4 camera(float translate, glm::vec2 const& rotate)
-{
-    const glm::mat4 projection = glm::perspective(glm::pi<float>() * 0.25f, 4.0f / 3.0f, 0.1f, 100.f);
-    glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -translate));
-    view = glm::rotate(view, rotate.y, glm::vec3(-1.0f, 0.0f, 0.0f));
-    view = glm::rotate(view, rotate.x, glm::vec3(0.0f, 1.0f, 0.0f));
-    const glm::mat4 model = glm::scale(glm::mat4(1.0f), glm::vec3(0.5f));
-    return projection * view * model;
-}
-
-#include "catch.hpp"
-
-namespace Catch {
-    template<> struct StringMaker< glm::vec2> {
-        static std::string convert(glm::vec2 const& v) {
-            std::ostringstream s;
-            s << '(' << v.x << ',' << v.y << ')';
-            return s.str();
-        }
-    };
-}
+#include <glm/vec2.hpp>
+#include <glm/vec4.hpp>
+#include <catch.hpp>
+#include "TestUtils.hpp"
+#include "glm/gtc/type_aligned.hpp"
 
 TEST_CASE("hello GLM")
 {
@@ -42,4 +20,18 @@ TEST_CASE("hello GLM")
 
     REQUIRE(c == glm::vec2(4, 6));
     FAIL();
+}
+
+TEST_CASE("hello aligned")
+{
+    glm::aligned_vec4 a(1, 2, 3, 4);
+    glm::aligned_vec4 b(5, 6, 7, 8);
+
+    glm::aligned_vec4 c = a + b;
+    
+    REQUIRE(c == glm::aligned_vec4(7, 8, 10, 12));
+
+    glm::dvec4 foo = c;
+
+    REQUIRE(foo == glm::dvec4(6, 8, 10, 12));
 }
