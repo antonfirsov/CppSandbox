@@ -6,6 +6,7 @@
 #include <catch.hpp>
 #include "TestUtils.hpp"
 #include "glm/gtc/type_aligned.hpp"
+#include "glm/gtc/constants.inl"
 
 TEST_CASE("hello GLM")
 {
@@ -143,5 +144,15 @@ namespace VectorTests
         {
             TestAddition();
         }   
+    }
+
+    namespace ComparePlz
+    {
+        TEST_CASE("vec4 lt")
+        {
+            glm::vec4 a(1, 2, 3, 4);
+
+            glm::vec4 b(1.1, 2.2, 3.3, 4.4);
+        }
     }
 }

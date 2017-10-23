@@ -27,13 +27,13 @@ namespace mums
             _negEps(-eps),
             _eps2(eps*eps),
             _negEps2(-_eps2),
-            _eps15(std::pow(eps, (TScalar)1.5)),
+            _eps15(std::pow(eps, static_cast<TScalar>(1.5))),
             _negEps15(-_eps15)
         {
 
         }
 
-        inline bool Zero(const TScalar d) const
+        bool Zero(const TScalar d) const
         {
             return d > _negEps && d < _eps;
         }
