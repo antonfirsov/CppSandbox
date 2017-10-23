@@ -8,6 +8,11 @@ namespace mums
     struct VectorTraits
     {
         static const bool IsVector = false;
+
+        static constexpr bool IsVectorOfDim(const glm::length_t dim)
+        {
+            return false;
+        }
     };
 
     template<
@@ -23,6 +28,20 @@ namespace mums
         >
     >
     {
-        static const bool IsVector = true;
+        static const bool IsVector = true;        
+
+        typedef glm::vec<L, T, Q> TVector;
+
+        typedef typename TVector::value_type TScalar;
+
+        static constexpr glm::length_t Dim()
+        {
+            return TVector::length();
+        }
+
+        static constexpr bool IsVectorOfDim(const glm::length_t dim)
+        {
+            return Dim() == dim;
+        }
     };
 }

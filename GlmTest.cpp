@@ -27,6 +27,13 @@ TEST_CASE("print and fail")
 {
     using namespace glm;
     
+    SECTION("vec2")
+    {
+        vec2 v(1, 2);
+        CAPTURE(v);
+        FAIL();
+    }
+
     SECTION("vec4")
     {
         vec4 v;
