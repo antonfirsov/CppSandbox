@@ -156,9 +156,11 @@ namespace mums
         /// http://realtimecollisiondetection.net/pubs/GDC07_Ericson_Physics_Tutorial_Numerical_Robustness.ppt
         /// (slide 42)
         /// </summary>
-        TScalar MulSum(double a, double b, double c, double d)
+        TScalar MulSum(TScalar a, TScalar b, TScalar c, TScalar d)
         {
-            TScalar max_ = glm::max(glm::abs(a), glm::abs(b), glm::abs(c), glm::abs(d));
+            using namespace glm;
+            
+            TScalar max_ = max(abs(a), abs(b), abs(c), abs(d));
             TScalar eps = max_ < glm::one<TScalar>() ? _eps15 : max_ * _eps15;
 
             TScalar det = a * b + c * d;
@@ -176,11 +178,11 @@ namespace mums
         /// http://realtimecollisiondetection.net/pubs/GDC07_Ericson_Physics_Tutorial_Numerical_Robustness.ppt
         /// (slide 42)
         /// </summary>
-        TScalar MulDiff(double a, double b, double c, double d)
+        TScalar MulDiff(TScalar a, TScalar b, TScalar c, TScalar d)
         {
             using namespace glm;
 
-            TScalar max_ = glm:max(glm::abs(a), glm::abs(b), glm::abs(c), glm::abs(d));
+            TScalar max_ = max(abs(a), abs(b), abs(c), abs(d));
             TScalar eps = max_ < glm::one<TScalar>() ? _eps15 : max_ * _eps15;
 
             TScalar det = a * b - c * d;
