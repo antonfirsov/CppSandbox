@@ -158,8 +158,8 @@ namespace mums
         /// </summary>
         TScalar MulSum(double a, double b, double c, double d)
         {
-            using namespace std;
-
+            using namespace glm;
+            
             TScalar max_ = max(abs(a), abs(b), abs(c), abs(d));
             TScalar eps = max_ < glm::one<TScalar>() ? _eps15 : max_ * _eps15;
 
@@ -180,7 +180,7 @@ namespace mums
         /// </summary>
         TScalar MulDiff(double a, double b, double c, double d)
         {
-            using namespace std;
+            using namespace glm;
 
             TScalar max_ = max(abs(a), abs(b), abs(c), abs(d));
             TScalar eps = max_ < glm::one<TScalar>() ? _eps15 : max_ * _eps15;
