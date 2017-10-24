@@ -16,15 +16,15 @@ namespace mums
     };
 
     template<
-        template <glm::length_t, typename, glm::qualifier> class TVector, 
+        template <glm::length_t, typename, glm::qualifier> class _TVector, 
         glm::length_t L, 
         typename T, 
         glm::qualifier Q
     >
     struct VectorTraits<
-        TVector<L, T, Q>, 
+        _TVector<L, T, Q>,
         std::enable_if_t<
-            std::is_same< TVector<L, T, Q>, typename glm::vec<L,T,Q>::type >::value
+            std::is_same<_TVector<L, T, Q>, typename glm::vec<L,T,Q>::type >::value
         >
     >
     {
