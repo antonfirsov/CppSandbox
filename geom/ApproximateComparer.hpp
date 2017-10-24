@@ -1,10 +1,13 @@
 #pragma once
 
+#include <cmath>
+#include "glm/gtc/constants.inl"
+
 namespace mums
 {
 
     template<typename _TScalar>
-    class _ApproximateComparerBase
+    class ApproximateComparer
     {
     public:
         typedef _TScalar TScalar;
@@ -22,7 +25,7 @@ namespace mums
 
         TScalar Eps2() const { return _eps2; }
 
-        _ApproximateComparerBase(TScalar eps) :
+        ApproximateComparer(TScalar eps) :
             _eps(eps),
             _negEps(-eps),
             _eps2(eps*eps),
@@ -30,7 +33,21 @@ namespace mums
             _eps15(std::pow(eps, static_cast<TScalar>(1.5))),
             _negEps15(-_eps15)
         {
+        }
+        
+        ApproximateComparer() : ApproximateComparer(DefaultEps())
+        {
+        }
 
+        static constexpr TScalar DefaultEps()
+        {
+            return static_cast<TScalar>(1e-5);
+        }
+        
+        static inline const ApproximateComparer<_TScalar>&  DefaultComparer()
+        {
+            static const ApproximateComparer<double> cmp;
+            return cmp;
         }
 
         bool Zero(const TScalar d) const
@@ -112,7 +129,7 @@ namespace mums
         //}
 
         //std::ostream& Print(std::ostream& s) const
-        friend std::ostream& operator <<(std::ostream& s, const _ApproximateComparerBase& apx)
+        friend std::ostream& operator <<(std::ostream& s, const ApproximateComparer& apx)
         {
             return s << "(eps=" << apx._eps << ")";
         }
@@ -141,8 +158,10 @@ namespace mums
         /// </summary>
         TScalar MulSum(double a, double b, double c, double d)
         {
-            TScalar max = Max(Abs(a), Abs(b), Abs(c), Abs(d));
-            TScalar eps = max < (TScalar)1 ? _eps15 : max * _eps15;
+            using namespace std;
+
+            TScalar max_ = max(abs(a), abs(b), abs(c), abs(d));
+            TScalar eps = max_ < glm::one<TScalar>() ? _eps15 : max_ * _eps15;
 
             TScalar det = a * b + c * d;
             if (det > -eps && det < eps) det = 0;
@@ -161,8 +180,10 @@ namespace mums
         /// </summary>
         TScalar MulDiff(double a, double b, double c, double d)
         {
-            TScalar max = Max(Abs(a), Abs(b), Abs(c), Abs(d));
-            TScalar eps = max < (TScalar)1 ? _eps15 : max * _eps15;
+            using namespace std;
+
+            TScalar max_ = max(abs(a), abs(b), abs(c), abs(d));
+            TScalar eps = max_ < glm::one<TScalar>() ? _eps15 : max_ * _eps15;
 
             TScalar det = a * b - c * d;
             if (det > -eps && det < eps) det = 0;
@@ -179,72 +200,5 @@ namespace mums
         //{
         //    return MulSum(a.x, b.x, a.y, b.y);
         //}
-    };
-
-    template<typename _TScalar>
-    class ApproximateComparer : public _ApproximateComparerBase<_TScalar>
-    {
-    public:
-
-        typedef _TScalar TScalar; // ostoba clang 3.0
-
-                                  /*ApproximateComparer(TScalar eps)
-                                  : _ApproximateComparerBase(eps)
-                                  {
-                                  }*/
-        ApproximateComparer(TScalar eps);
-
-        static inline const ApproximateComparer<_TScalar>&  DefaultComparer();
-    };
-
-
-    template<>
-    class ApproximateComparer<double> : public _ApproximateComparerBase<double>
-    {
-    public:
-
-        typedef double TScalar; // ostoba clang 3.0
-
-
-
-        ApproximateComparer(double eps)
-            : _ApproximateComparerBase(eps)
-        {
-        }
-
-        ApproximateComparer()
-            : _ApproximateComparerBase(1e-5)
-        {
-        }
-
-        static inline const ApproximateComparer<double>&  DefaultComparer()
-        {
-            static const ApproximateComparer<double> cmp;
-            return cmp;
-        }
-    };
-
-    template<>
-    class ApproximateComparer<float> : public _ApproximateComparerBase<float>
-    {
-    public:
-
-        typedef float TScalar; // ostoba clang 3.0
-
-        ApproximateComparer(float eps)
-            : _ApproximateComparerBase(eps)
-        {
-        }
-
-        ApproximateComparer()
-            : _ApproximateComparerBase(1e-5f)
-        {
-        }
-
-        static inline const ApproximateComparer<float>&  DefaultComparer()
-        {
-            static const ApproximateComparer<float> cmp;
-            return cmp;
-        }
     };
 }
