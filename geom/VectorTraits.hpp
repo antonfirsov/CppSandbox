@@ -24,7 +24,7 @@ namespace mums
     struct VectorTraits<
         TVector<L, T, Q>, 
         std::enable_if_t<
-            std::is_same_v< TVector<L, T, Q>, typename glm::vec<L,T,Q>::type >
+            std::is_same< TVector<L, T, Q>, typename glm::vec<L,T,Q>::type >::value
         >
     >
     {

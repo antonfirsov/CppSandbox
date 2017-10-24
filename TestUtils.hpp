@@ -45,7 +45,7 @@ namespace Catch {
     >
     struct StringMaker<TVector<L, T, Q>> : detail::VectorStringMakerBase<
         TVector<L, T, Q>,
-        std::enable_if_t<::mums::VectorTraits<TVector<L, T, Q>>::IsVector>
+        typename std::enable_if<::mums::VectorTraits<TVector<L, T, Q>>::IsVector>::type
     >
     {
     };

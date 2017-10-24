@@ -2,10 +2,9 @@
 project (hello)
 
 if (MSVC)
-	add_definitions(" /arch:AVX2")
+	add_definitions(" /arch:AVX2 /std:c++14")
 elseif (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
 	add_definitions(" -std=c++14")
-  # using regular Clang or AppleClang
 endif()
 
 add_executable(hello Main.cpp Hello.cpp GlmTest.cpp GeomTest.cpp ApproximateComparerTests.cpp)
