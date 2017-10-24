@@ -49,13 +49,16 @@ namespace Catch {
     >
     {
     };
+
     
-//#define MAKE_VECTOR4_STRING_MAKER(T) template<> struct StringMaker<T> : detail::Vector4StringMakerBase<T> {};
-//
-//    MAKE_VECTOR4_STRING_MAKER(glm::vec4)
-//    MAKE_VECTOR4_STRING_MAKER(glm::dvec4)
-//    MAKE_VECTOR4_STRING_MAKER(glm::aligned_vec4)
-//    MAKE_VECTOR4_STRING_MAKER(glm::aligned_dvec4)
-//
-//#undef MAKE_VECTOR4_STRING_MAKER
 }
+
+namespace mums
+{
+    namespace tests
+    {
+        template <typename T1, typename T2>
+        constexpr bool SameTypes = std::is_same<T1, T2>::value;
+    }
+}
+

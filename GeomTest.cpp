@@ -11,6 +11,8 @@ namespace mums
         template<glm::length_t L, typename T, glm::qualifier Q>
         struct TotallyNotAVector { };
 
+        
+
         TEST_CASE("VectorTraits")
         {
             SECTION("IsVector")
@@ -24,12 +26,12 @@ namespace mums
 
             SECTION("TVector")
             {
-                static_assert(std::is_same_v < glm::vec4, VectorTraits<glm::vec4>::TVector>, ":(");
+                static_assert(SameTypes<glm::vec4, VectorTraits<glm::vec4>::TVector>, ":(");
             }
 
             SECTION("TScalar")
             {
-                static_assert(std::is_same_v<double, VectorTraits<glm::dvec2>::TScalar>, ":(");
+                static_assert(SameTypes<double, VectorTraits<glm::dvec2>::TScalar>, ":(");
             }
             
             SECTION("IsVectorOfDim")
